@@ -3,4 +3,4 @@ project(KMA_OOP_04Lab)
 
 set(CMAKE_CXX_STANDARD 98)
 
-add_executable(KMA_OOP_04Lab main.cpp)
+add_executable(KMA_OOP_04Lab src/main.cpp)
