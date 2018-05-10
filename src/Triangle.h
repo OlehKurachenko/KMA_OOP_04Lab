@@ -194,15 +194,8 @@ inline Triangle &Triangle::operator=(const Triangle &that) {
 }
 
 inline double Triangle::area() const {
-    if (_ha)
-        return _ha->length() * _b.distanceTo(_c) / 2;
-    if (_hb)
-        return _hb->length() * _a.distanceTo(_c) / 2;
-    if (_hc)
-        return _hc->length() * _a.distanceTo(_b) / 2;
-    if (!_ab)
-        _ab = new Segment(_a, _b);
-    return _ab->length() * _ab->distance(_c) / 2;
+    return (apexB().x() - apexA().x()) * (apexC().y() - apexA().y())
+           - (apexB().y() - apexA().y()) * (apexC().x() - apexA().x());
 }
 
 inline const Segment& Triangle::side_a() const {
