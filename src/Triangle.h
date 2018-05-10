@@ -32,41 +32,49 @@ public:
 
     inline ~Triangle();
 
-    Triangle& operator=(const Triangle&);
+    inline Triangle& operator=(const Triangle&);
 
-    double perimeter() const;
+    inline double perimeter() const { return _a.distanceTo(_b) + _b.distanceTo(_c) + _c.distanceTo(_a); }
 
-    double area() const;
+    inline double area() const;
 
-    const Point& apexA() const;
+    inline const Point& apexA() const { return _a; }
 
-    const Point& apexB() const;
+    inline const Point& apexB() const { return _b; }
 
-    const Point& apexC() const;
+    inline const Point& apexC() const { return _c; }
 
-    const Segment& side_a() const;
+    inline const Segment& side_a() const;
 
-    const Segment& side_b() const;
+    inline const Segment& side_b() const;
 
-    const Segment& side_c() const;
+    inline const Segment& side_c() const;
 
-    double length_a() const;
+    inline double length_a() const { return _b.distanceTo(_c); }
 
-    double length_b() const;
+    inline double length_b() const { return _a.distanceTo(_c); }
 
-    double length_c() const;
+    inline double length_c() const { return _a.distanceTo(_b); }
 
-    const Segment& height_a() const;
+    inline const Segment& height_a() const;
 
-    const Segment& height_b() const;
+    inline const Segment& height_b() const;
 
-    const Segment& height_c() const;
+    inline const Segment& height_c() const;
 
 private:
 
     Point _a, _b, _c;
     mutable Segment *_ab, *_bc, *_ac;
     mutable Segment *_ha, *_hb, *_hc;
+
+    /**
+     * @param top -- vertex-top of height
+     * @param baseA -- first vertex of base of height
+     * @param baseB -- second vertex of base of height
+     * @return height form vertex top to base
+     */
+    inline static Segment height(const Point &top, const Point &baseA, const Point &baseB);
 };
 
 inline ostream& operator<<(ostream &, const Triangle &); // TODO implement
@@ -149,6 +157,81 @@ inline Triangle::~Triangle() {
     delete _ha;
     delete _hb;
     delete _hc;
+}
+
+inline Triangle &Triangle::operator=(const Triangle &that) {
+    _a = that.apexA();
+    _b = that.apexB();
+    _c = that.apexC();
+    _ab = NULL;
+    _bc = NULL;
+    _ac = NULL;
+    _ha = NULL;
+    _hb = NULL;
+    _hc = NULL;
+    return *this;
+}
+
+inline double Triangle::area() const {
+    if (_ha)
+        return _ha->length() * _b.distanceTo(_c) / 2;
+    if (_hb)
+        return _hb->length() * _a.distanceTo(_c) / 2;
+    if (_hc)
+        return _hc->length() * _a.distanceTo(_b) / 2;
+    if (!_ab)
+        _ab = new Segment(_a, _b);
+    return _ab->length() * _ab->distance(_c) / 2;
+}
+
+inline const Segment& Triangle::side_a() const {
+    if (!_bc)
+        _bc = new Segment(_b, _c);
+    return *_bc;
+}
+
+inline const Segment &Triangle::side_b() const {
+    if (!_ac)
+        _ac = new Segment(_a, _c);
+    return *_ac;
+}
+
+inline const Segment &Triangle::side_c() const {
+    if (!_ab)
+        _ab = new Segment(_a, _b);
+    return *_ab;
+}
+
+inline const Segment &Triangle::height_a() const {
+    if (!_ha)
+        _ha = new Segment(height(_a, _b, _c));
+    return *_ha;
+}
+
+inline const Segment &Triangle::height_b() const {
+    if (!_hb)
+        _hb = new Segment(height(_b, _a, _c));
+    return *_hb;
+}
+
+inline const Segment &Triangle::height_c() const {
+    if (!_hc)
+        _hc = new Segment(height(_c, _a, _c));
+    return *_hc;
+}
+
+inline static Segment Triangle::height(const Point &top, const Point &baseA, const Point &baseB) {
+    const double a = baseB.y() - baseA.y();   // A in base line equation and B in equation of height line
+    const double b = baseA.x() - baseB.x();   // B in base line equation and -A in equation of height line
+    const double c = baseB.x() * baseA.y() - baseA.x() * baseB.y(); // C in base line equation
+    const double ch = top.x() * (baseA.x() - baseB.x()) - top.y() * (baseB.y() - baseA.y());    // C in equation
+                                                                                                // of height line
+
+    if (a == 0)
+        return Segment(top, Point(-(c / b), ch / b));
+
+    const double y = -((b * c / a + ch) / (a + b * b / a));
+    return Segment(top, Point(-((b * y + c) / a), y));
 }
 
 #endif //KMA_OOP_04LAB_TRIANGLE_H
