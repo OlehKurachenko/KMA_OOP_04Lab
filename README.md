@@ -1,6 +1,12 @@
 # KMA OOP 04Lab
 
-A task form OOP course in NaUKMA
+A task form [OOP][Volodymyr Boublik] course in [NaUKMA][NaUKMA].
+
+This task is based on [01Lab](src/Point/README_01Lab.md) and
+[02Lab](src/Segment/README_02Lab.md)
+
+[Volodymyr Boublik]: https://www.linkedin.com/in/volodymyr-boublik-869a4430/
+[NaUKMA]: http://www.ukma.edu.ua/eng/
 
 ## Task
 
