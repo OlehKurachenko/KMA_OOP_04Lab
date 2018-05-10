@@ -115,6 +115,8 @@ inline Triangle::Triangle(const double x1, const double y1, const double x2, con
     _hb(NULL),
     _hc(NULL)
 {
+    if (this->area() == 0)
+        throw BadTriangle("area is 0");
 #ifndef NDEBUG
     cout << "constructor Triangle(" << x1 << ", " << y1 << ", " << x2 << ", " << y2 << ", " << x3
          << ", " << y3 << ") call, " << *this << " created" << endl;
@@ -132,6 +134,8 @@ inline Triangle::Triangle(const Point &a, const Point &b, const Point &c):
         _hb(NULL),
         _hc(NULL)
 {
+    if (this->area() == 0)
+        throw BadTriangle("area is 0");
 #ifndef NDEBUG
     cout << "constructor Triangle(" << a << ", " << b << ", " << c << ") call, " << *this << " created" << endl;
 #endif
@@ -148,6 +152,8 @@ inline Triangle::Triangle(const Point &a, const Segment &bc):
         _hb(NULL),
         _hc(NULL)
 {
+    if (this->area() == 0)
+        throw BadTriangle("area is 0");
 #ifndef NDEBUG
     cout << "constructor Triangle(" << a << ", " << bc << ") call, " << *this << " created" << endl;
 #endif
@@ -195,8 +201,8 @@ inline Triangle &Triangle::operator=(const Triangle &that) {
 }
 
 inline double Triangle::area() const {
-    return abs(apexB().x() - apexA().x()) * (apexC().y() - apexA().y())
-           - (apexB().y() - apexA().y()) * (apexC().x() - apexA().x()) / 2;
+    return abs((apexB().x() - apexA().x()) * (apexC().y() - apexA().y())
+           - (apexB().y() - apexA().y()) * (apexC().x() - apexA().x())) / 2;
 }
 
 inline const Segment& Triangle::side_a() const {

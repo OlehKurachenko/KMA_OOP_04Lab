@@ -78,5 +78,11 @@ int main() {
 
     cout << "\033[1;32m" << "tests: all ok!" << "\033[0;0m" << endl;
 
+    try {
+        Triangle d(0, 0, 0, 0, 0, 0);
+    } catch (Triangle::BadTriangle &badTriangle) {
+        cerr << badTriangle << endl;
+    }
+
     return 0;
 }
