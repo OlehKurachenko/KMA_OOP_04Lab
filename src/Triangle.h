@@ -77,7 +77,7 @@ private:
     inline static Segment height(const Point &top, const Point &baseA, const Point &baseB);
 };
 
-inline ostream& operator<<(ostream &, const Triangle &); // TODO implement
+inline ostream& operator<<(ostream &, const Triangle &);
 
 //  class Triangle methods definitions
 
@@ -232,6 +232,13 @@ inline static Segment Triangle::height(const Point &top, const Point &baseA, con
 
     const double y = -((b * c / a + ch) / (a + b * b / a));
     return Segment(top, Point(-((b * y + c) / a), y));
+}
+
+//  class Triangle utills definitions
+
+inline ostream& operator<<(ostream &ostr, const Triangle &triangle) {
+    ostr << "Triangle{a=" << triangle.apexA() << ", b=" << triangle.apexB() << ", c=" << triangle.apexC() << '}';
+    return ostr;
 }
 
 #endif //KMA_OOP_04LAB_TRIANGLE_H

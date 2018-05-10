@@ -84,7 +84,7 @@ inline Segment::Segment(const double x1, const double y1, const double x2, const
 #endif
 }
 
-inline Segment::Segment(const Point &a, const Point &b = Point(0, 0)):
+inline Segment::Segment(const Point &a, const Point &b):
     _myID(++freeID),
     _a(a),
     _b(b)
