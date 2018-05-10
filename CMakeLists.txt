@@ -8,4 +8,4 @@ add_executable(KMA_OOP_04Lab
         src/Point/Point.cpp
         src/Segment/Segment.h
         src/Segment/Segment.cpp
-        src/unittest_main.cpp)
+        src/unittest_main.cpp src/Triangle.h)
