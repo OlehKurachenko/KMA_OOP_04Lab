@@ -149,7 +149,7 @@ inline Triangle::Triangle(const Triangle &that):
 
 inline Triangle::~Triangle() {
 #ifndef NDEBUG
-    cout << "constructor ~Triangle(" << *this  << ") call" << endl;
+    cout << "destructor ~Triangle(" << *this  << ") call" << endl;
 #endif
     delete _ab;
     delete _bc;
@@ -216,11 +216,11 @@ inline const Segment &Triangle::height_b() const {
 
 inline const Segment &Triangle::height_c() const {
     if (!_hc)
-        _hc = new Segment(height(_c, _a, _c));
+        _hc = new Segment(height(_c, _a, _b));
     return *_hc;
 }
 
-inline static Segment Triangle::height(const Point &top, const Point &baseA, const Point &baseB) {
+inline Segment Triangle::height(const Point &top, const Point &baseA, const Point &baseB) {
     const double a = baseB.y() - baseA.y();   // A in base line equation and B in equation of height line
     const double b = baseA.x() - baseB.x();   // B in base line equation and -A in equation of height line
     const double c = baseB.x() * baseA.y() - baseA.x() * baseB.y(); // C in base line equation
@@ -228,7 +228,7 @@ inline static Segment Triangle::height(const Point &top, const Point &baseA, con
                                                                                                 // of height line
 
     if (a == 0)
-        return Segment(top, Point(-(c / b), ch / b));
+        return Segment(top, Point(ch / b, -(c / b)));
 
     const double y = -((b * c / a + ch) / (a + b * b / a));
     return Segment(top, Point(-((b * y + c) / a), y));
