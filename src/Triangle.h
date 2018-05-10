@@ -12,6 +12,7 @@
 #define KMA_OOP_04LAB_TRIANGLE_H
 
 #include <iostream>
+#include <string>
 
 #include "Point/Point.h"
 #include "Segment/Segment.h"
@@ -20,6 +21,8 @@ using namespace std;
 
 class Triangle {
 public:
+    class BadTriangle;
+
     explicit inline Triangle(const double x1=0, const double y1=0,
              const double x2=1, const double y2=0,
              const double x3=0, const double y3=1);
@@ -77,7 +80,25 @@ private:
     inline static Segment height(const Point &top, const Point &baseA, const Point &baseB);
 };
 
+//  class Triangle utills declarations
+
 inline ostream& operator<<(ostream &, const Triangle &);
+
+
+//  class Triangle::BadTriangle body & utills
+
+class Triangle::BadTriangle {
+public:
+    inline BadTriangle(const string &errorMessage):
+        _errorMessage(errorMessage) { }
+
+    string _errorMessage;
+};
+
+inline ostream& operator<<(ostream &ostr, const Triangle::BadTriangle &badTriangle) {
+    ostr << "BadTriangle: " << badTriangle._errorMessage << endl;
+    return ostr;
+}
 
 //  class Triangle methods definitions
 
