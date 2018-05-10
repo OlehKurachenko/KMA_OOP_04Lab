@@ -71,6 +71,11 @@ int main() {
     assert(b3.side_b().length() == b3.length_b());
     assert(b3.side_c().length() == b3.length_c());
 
+    Triangle c(0, 0, 0, 4, 3, 0);
+
+    assert(c.perimeter() == 12);
+    assert(c.area() == 6);
+
     cout << "\033[1;32m" << "tests: all ok!" << "\033[0;0m" << endl;
 
     return 0;

@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <string>
+#include <cmath>
 
 #include "Point/Point.h"
 #include "Segment/Segment.h"
@@ -194,8 +195,8 @@ inline Triangle &Triangle::operator=(const Triangle &that) {
 }
 
 inline double Triangle::area() const {
-    return (apexB().x() - apexA().x()) * (apexC().y() - apexA().y())
-           - (apexB().y() - apexA().y()) * (apexC().x() - apexA().x());
+    return abs(apexB().x() - apexA().x()) * (apexC().y() - apexA().y())
+           - (apexB().y() - apexA().y()) * (apexC().x() - apexA().x()) / 2;
 }
 
 inline const Segment& Triangle::side_a() const {
